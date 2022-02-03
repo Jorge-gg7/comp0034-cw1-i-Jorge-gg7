@@ -10,7 +10,7 @@ import plotly.express as px
 from dash import dcc
 from dash import html
 
-external_stylesheets = [dbc.themes.BOOTSTRAP]
+external_stylesheets = [dbc.themes.LITERA]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -23,17 +23,9 @@ df = pd.DataFrame({
 
 fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
-app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
-
-    html.Div(children='''
-        Dash: A web application framework for Python.
-    '''),
-
-    dcc.Graph(
-        id='example-graph',
-        figure=fig
-    )
+app.layout = dbc.Container([
+    dbc.Row([html.Nav(children='NAV', className='navbar navbar-expand-lg navbar-dark bg-primary')
+    ])
 ])
 
 if __name__ == '__main__':
