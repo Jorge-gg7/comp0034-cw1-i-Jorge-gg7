@@ -1,7 +1,7 @@
 # Copied from the Dash tutorial documentation at https://dash.plotly.com/layout on 24/05/2021
 # Import section modified 10/10/2021 to comply with changes in the Dash library.
 
-# Run this app with `python dash_app.py` and visit http://127.0.0.1:8050/ in your web browser.
+# Run this app with `python index.py` and visit http://127.0.0.1:8050/ in your web browser.
 
 import dash
 import dash_bootstrap_components as dbc
@@ -9,6 +9,7 @@ import pandas as pd
 import plotly.express as px
 from dash import dcc
 from dash import html
+
 
 external_stylesheets = [dbc.themes.LITERA]
 
