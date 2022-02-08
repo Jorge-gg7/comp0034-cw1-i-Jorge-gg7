@@ -6,9 +6,9 @@ from dash import html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 from multi_page_app.app import app
 
-df = pd.read_csv('datasets/business-demographics-updated.csv')
-f = open('datasets/london_boroughs.json')
-geoj = json.load(f)
+# df = pd.read_csv('datasets/business-demographics-updated.csv')
+# f = open('datasets/london_boroughs.json')
+# geoj = json.load(f)
 
 layout = dbc.Container([
     html.Br(),
@@ -48,5 +48,35 @@ layout = dbc.Container([
                      clearable=False,
                      style={"width": "40%", "color": "black"}
                      )
+    ),
+
+    html.Br(),
+    dbc.Row(
+        dbc.Col([
+            # dcc.Graph(id='surv-graph', figure={}, className='six columns'),
+            dcc.Graph(id='choropleth', figure={}, className='six columns')
+        ]
+        )
     )
 ])
+
+# @app.callback(
+#     [Output(component_id='choropleth', component_property='figure')],
+#     [Input(component_id='slct-yr', component_property='value')]
+# )
+# def update_map(option_slctd):
+#
+#     dff = df.copy()
+#     geojj = geoj.copy()
+#     dff = dff[dff["year"] == option_slctd]
+#
+#     fig = px.choropleth(
+#         data_frame=dff,
+#         featureidkey='properties.code',
+#         geojson=geojj,
+#         locations='code',
+#         color='birth-death_rate',
+#         hover_data=['area', 'active_enterprises', 'birth_rate', 'death_rate', 'birth-death_rate'],
+#         color_continuous_scale=px.colors.sequential.YlOrRd,
+#     )
+#     return fig
