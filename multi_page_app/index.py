@@ -3,7 +3,7 @@ from dash import dcc, html
 from dash import Input, Output
 
 from multi_page_app.apps.page1 import map_app
-# from multi_page_app.apps.page2 import page_2
+from multi_page_app.apps.page2 import comparison
 
 from multi_page_app.app import app
 
@@ -79,8 +79,8 @@ app.layout = dbc.Container(fluid=True, children=[
 def display_page(pathname):
     if pathname == '/map':
         return map_app.layout
-    # elif pathname == '/compare':
-    #     return page2.layout
+    elif pathname == '/compare':
+        return comparison.layout
     elif pathname == '/':
         return index_layout
     else:
