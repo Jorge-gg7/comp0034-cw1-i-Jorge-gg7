@@ -12,16 +12,18 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Map", href="/map", id="map-link", style={"padding-right": "30px"})),
         dbc.NavItem(dbc.NavLink("Compare", href="/compare", id="compare-link", style={"padding-right": "30px"})),
-        dbc.NavItem(dbc.Button("Logout", color='light', href='/logout', id="logout-link", style={"padding-left":"10px"})
-                    )
+        dbc.NavItem(
+            dbc.Button("Logout", color='light', href='/logout', id="logout-link", style={"padding-left": "10px"},
+                       )
+        )
     ],
     brand="London Businesses",
     brand_href="/",
-    color='secondary',
+    color='primary',
     dark='True',
     fluid=True,
     class_name='navbar-expand-sm sticky-top',
-    style={"border-radius":"10px"}
+    style={"border-radius": "10px"}
 )
 
 map_card = dbc.Card(
@@ -41,7 +43,7 @@ map_card = dbc.Card(
             ]
         ),
     ],
-    style={"border-radius":"25px"}
+    style={"border-radius": "25px"}
 )
 
 comparison_card = dbc.Card(
@@ -60,12 +62,12 @@ comparison_card = dbc.Card(
             ]
         ),
     ],
-    style={"border-radius":"25px"}
+    style={"border-radius": "25px"}
 )
 
 index_layout = dbc.Container([
     dbc.Row([dbc.Col(map_card, width=3),
-            dbc.Col(comparison_card, width=3)])
+             dbc.Col(comparison_card, width=3)])
 ], className="mx-auto rounded", style={"position": "absolute", "top": "25%", "left": "30%"})
 
 app.layout = dbc.Container(fluid=True, children=[
@@ -73,6 +75,7 @@ app.layout = dbc.Container(fluid=True, children=[
     navbar,
     html.Div(id='page-content')
 ])
+
 
 @app.callback(Output('page-content', 'children'),
               Input('url', 'pathname'))
@@ -85,6 +88,7 @@ def display_page(pathname):
         return index_layout
     else:
         return '404 Page Not Found'
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
