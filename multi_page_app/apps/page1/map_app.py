@@ -1,25 +1,30 @@
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import json
 
 from dash import html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 from multi_page_app.app import app
 
-# df = pd.read_csv('datasets/business-demographics-updated.csv')
-# f = open('datasets/london_boroughs.json')
-# geoj = json.load(f)
+df1 = pd.read_csv(
+    'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/business-demographics-updated.csv')
+df2 = pd.read_csv(
+    'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/business-survival-rates-updated.csv')
+f = open(
+    'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/london_boroughs.json')
+geoj = json.load(f)
 
 layout = dbc.Container([
     html.Br(),
 
     dbc.Row(
         dbc.Col(html.H1("Choropleth Map")
-                )
+                , id='title')
     ),
 
     dbc.Row(
-        dbc.Col(html.H5("Select the year on the dropdown menu that you want to explore and hover over the boroughs to "
+        dbc.Col(html.H5("Select the year on the dropdown menu that you want to explore and click on the boroughs to "
                         "learn more about the businesses there!"), className='text-muted')
     ),
 
@@ -49,34 +54,72 @@ layout = dbc.Container([
                      style={"width": "40%", "color": "black"}
                      )
     ),
-
     html.Br(),
+    dbc.Row(children=[
+        dbc.Col(width=5, children=[
+            dcc.Graph(id='surv-graph')
+        ], style={'margin': '0'}),
+        dbc.Col(width=7, children=[
+            dcc.Graph(id='map')
+        ], style={'margin': '0'})
+    ]),
     dbc.Row(
-        dbc.Col([
-            # dcc.Graph(id='surv-graph', figure={}, className='six columns'),
-            dcc.Graph(id='choropleth', figure={}, className='six columns')
-        ]
-        )
+
     )
 ])
 
-# @app.callback(
-#     [Output(component_id='choropleth', component_property='figure')],
-#     [Input(component_id='slct-yr', component_property='value')]
-# )
-# def update_map(option_slctd):
-#
-#     dff = df.copy()
-#     geojj = geoj.copy()
-#     dff = dff[dff["year"] == option_slctd]
-#
-#     fig = px.choropleth(
-#         data_frame=dff,
-#         featureidkey='properties.code',
-#         geojson=geojj,
-#         locations='code',
-#         color='birth-death_rate',
-#         hover_data=['area', 'active_enterprises', 'birth_rate', 'death_rate', 'birth-death_rate'],
-#         color_continuous_scale=px.colors.sequential.YlOrRd,
-#     )
-#     return fig
+
+@app.callback(
+    [Output('map', 'figure')],
+    [Input('slct_yr', 'value')]
+)
+def update_map(option_slctd):
+    dff1 = df1.copy()
+    geojj = geoj.copy()
+    dff1 = dff1[dff1["year"] == option_slctd]
+
+    fig = px.choropleth_mapbox(
+        data_frame=dff1,
+        featureidkey='properties.code',
+        locations='code',
+        geojson=geojj,
+        mapbox_style="carto-positron",
+        color='birth-death_rate',
+        hover_name='area',
+        hover_data=['active_enterprises', 'birth_rate', 'death_rate', 'birth-death_rate'],
+        color_continuous_scale='Viridis',
+        custom_data=['area'],
+        opacity=0.5,
+        center={'lat': 51.509865, 'lon': -0.118092}
+    )
+    return [fig]
+
+@app.callback(
+    [Output('surv-graph', 'figure'),
+     Input('map', 'clickData'),
+     Input('slct_yr', 'value')]
+)
+def update_bar(clk_data, year):
+    dff2 = df2.copy()
+
+    if clk_data is None:
+        dff2 = dff2[dff2["year"] == 2004]
+        dff2 = dff2[dff2['area'] == 'City of London']
+
+        survival_rates = ['1_year_survival_rate', '2_year_survival_rate', '3_year_survival_rate',
+                          '4_year_survival_rate', '5_year_survival_rate']
+
+        fig1 = px.bar(dff2, x=survival_rates, y='area', barmode='group', orientation='h', title='Survival Rates')
+        fig1.update_layout(showlegend=False)
+        return [fig1]
+    else:
+        dff2 = dff2[dff2["year"] == year]
+        click_area = clk_data['points'][0]['customdata'][0]
+        dff2 = dff2[dff2["area"] == click_area]
+
+        survival_rates = ['1_year_survival_rate', '2_year_survival_rate', '3_year_survival_rate',
+                          '4_year_survival_rate', '5_year_survival_rate']
+
+        fig1 = px.bar(dff2, x=survival_rates, y='area', barmode='group', orientation='h', title='Survival Rates')
+        fig1.update_layout(showlegend=False)
+        return [fig1]
