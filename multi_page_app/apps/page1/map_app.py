@@ -19,7 +19,7 @@ layout = dbc.Container([
     html.Br(),
 
     dbc.Row(
-        dbc.Col(html.H1("Choropleth Map")
+        dbc.Col(html.H2("Choropleth Map")
                 , id='title')
     ),
 
@@ -54,7 +54,10 @@ layout = dbc.Container([
                      style={"width": "40%", "color": "black"}
                      )
     ),
-    html.Br(),
+    html.Em(children=[
+        '*Please note that any data after 2019 is not available.'
+    ]
+    ),
     dbc.Row(children=[
         dbc.Col(width=5, children=[
             dcc.Graph(id='surv-graph')
@@ -63,9 +66,6 @@ layout = dbc.Container([
             dcc.Graph(id='map')
         ], style={'margin': '0'})
     ]),
-    dbc.Row(
-
-    )
 ])
 
 
@@ -86,13 +86,14 @@ def update_map(option_slctd):
         mapbox_style="carto-positron",
         color='birth-death_rate',
         hover_name='area',
-        hover_data=['active_enterprises', 'birth_rate', 'death_rate', 'birth-death_rate'],
+        hover_data=['active_enterprises', 'births', 'birth_rate', 'death_rate', 'birth-death_rate'],
         color_continuous_scale='Viridis',
         custom_data=['area'],
         opacity=0.5,
         center={'lat': 51.509865, 'lon': -0.118092}
     )
     return [fig]
+
 
 @app.callback(
     [Output('surv-graph', 'figure'),
@@ -109,8 +110,10 @@ def update_bar(clk_data, year):
         survival_rates = ['1_year_survival_rate', '2_year_survival_rate', '3_year_survival_rate',
                           '4_year_survival_rate', '5_year_survival_rate']
 
-        fig1 = px.bar(dff2, x=survival_rates, y='area', barmode='group', orientation='h', title='Survival Rates')
-        fig1.update_layout(showlegend=False)
+        fig1 = px.bar(dff2, x='area', y=survival_rates, barmode='group', orientation='v', title='Survival Rates of new '
+                                                                                                'businesses formed in '
+                                                                                                '2004',
+                      labels={'area': '', 'variable': 'Years after 2004'})
         return [fig1]
     else:
         dff2 = dff2[dff2["year"] == year]
@@ -120,6 +123,8 @@ def update_bar(clk_data, year):
         survival_rates = ['1_year_survival_rate', '2_year_survival_rate', '3_year_survival_rate',
                           '4_year_survival_rate', '5_year_survival_rate']
 
-        fig1 = px.bar(dff2, x=survival_rates, y='area', barmode='group', orientation='h', title='Survival Rates')
-        fig1.update_layout(showlegend=False)
+        fig1 = px.bar(dff2, x='area', y=survival_rates, barmode='group', orientation='v', title='Survival Rates of new '
+                                                                                                'businesses formed in '
+                                                                                                '{}'.format(year),
+                      labels={'area': '', 'variable': 'Years after {}'.format(year)})
         return [fig1]

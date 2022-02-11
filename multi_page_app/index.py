@@ -28,15 +28,14 @@ navbar = dbc.NavbarSimple(
 
 map_card = dbc.Card(
     [
-        dbc.CardImg(src="assets/images/Image1.png", top=True, title='Map Image by Google',
-                    alt="Get to explore the statistics of the different boroughs in London!"),
+        dbc.CardImg(src="assets/images/Map_Image.png", top=True, title='Map Image by Google',
+                    alt="Get to explore the statistics of the different boroughs in London!", style={}),
         dbc.CardBody(
             [
                 html.H4("The Map", className="card-title"),
                 html.P(
                     "Be able to visualise business statistics in London "
-                    "throughout 2004-2019 on a map. Hover over the different boroughs"
-                    "to learn more about them!",
+                    "throughout 2004-2019 on a map by hovering over the different boroughs",
                     className="card-text",
                 ),
                 dbc.Button("Explore the map!", href="/map", color="primary"),
@@ -48,14 +47,14 @@ map_card = dbc.Card(
 
 comparison_card = dbc.Card(
     [
-        dbc.CardImg(src="assets/images/compare-crms-like-a-pro-01.png", top=True, title='Image by Google',
-                    alt="Get to explore the statistics of the different boroughs in London!"),
+        dbc.CardImg(src="assets/images/Map_Image.png", top=True, title='Image by Google',
+                    alt="Get to explore the statistics of the different boroughs in London!", style={}),
         dbc.CardBody(
             [
                 html.H4("Compare the Boroughs", className="card-title"),
                 html.P(
                     "Learn about the boroughs birth and death rates over the years "
-                    "from 2004-2019 and compare them simultaneously",
+                    "from 2004-2019 and compare them simultaneously!",
                     className="card-text",
                 ),
                 dbc.Button("Compare!", href="/page2", color="primary"),
@@ -66,9 +65,13 @@ comparison_card = dbc.Card(
 )
 
 index_layout = dbc.Container([
-    dbc.Row([dbc.Col(map_card, width=3),
-             dbc.Col(comparison_card, width=3)])
-], className="mx-auto rounded", style={"position": "absolute", "top": "25%", "left": "30%"})
+    html.Br(),
+    dbc.Row([
+        dbc.Col(html.H1('Main Menu', id='main-menu-title'), width={'offset': 1})
+    ]),
+    dbc.Row([dbc.Col(map_card, width={'size': 4, 'offset': 1}),
+             dbc.Col(comparison_card, width=4)])
+    ], className="mx-auto rounded", style={"position": "absolute"})
 
 app.layout = dbc.Container(fluid=True, children=[
     dcc.Location(id='url', refresh=False),
