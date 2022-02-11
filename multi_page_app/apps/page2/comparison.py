@@ -6,7 +6,7 @@ from dash import html, dcc, Input, Output
 from multi_page_app.app import app
 
 df = pd.read_csv(
-     '/Users/limchernyao/PycharmProjects/comp0034-cw1-i-team10/multi_page_app/apps/page2/datasets/business-demographics-updated.csv')
+     'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page2/datasets/business-demographics-updated.csv')
 
 layout = html.Div([
 
