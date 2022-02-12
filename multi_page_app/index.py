@@ -3,11 +3,10 @@ from dash import dcc, html
 from dash import Input, Output
 
 from multi_page_app.apps.page1 import map_app
-from multi_page_app.apps.page2 import comparison
+from multi_page_app.apps.page2 import comparison_ver2
 
 from multi_page_app.app import app
 
-# assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Map", href="/map", id="map-link", style={"padding-right": "30px"})),
@@ -28,8 +27,9 @@ navbar = dbc.NavbarSimple(
 
 map_card = dbc.Card(
     [
-        dbc.CardImg(src="assets/images/Map_Image.png", top=True, title='Map Image by Google',
-                    alt="Get to explore the statistics of the different boroughs in London!", style={}),
+        dbc.CardImg(src="assets/images/Map_Image.png", top=True, title='Map Image by Brandon Chew',
+                    alt="Get to explore the statistics of the different boroughs in London!",
+                    style={"border-radius": "25px"}),
         dbc.CardBody(
             [
                 html.H4("The Map", className="card-title"),
@@ -47,8 +47,9 @@ map_card = dbc.Card(
 
 comparison_card = dbc.Card(
     [
-        dbc.CardImg(src="assets/images/Map_Image.png", top=True, title='Image by Google',
-                    alt="Get to explore the statistics of the different boroughs in London!", style={}),
+        dbc.CardImg(src="assets/images/compare.png", top=True, title='Image by Chern Yao Lim',
+                    alt="Get to explore the statistics of the different boroughs in London!",
+                    style={"border-radius": "25px"}),
         dbc.CardBody(
             [
                 html.H4("Compare the Boroughs", className="card-title"),
@@ -57,7 +58,7 @@ comparison_card = dbc.Card(
                     "from 2004-2019 and compare them simultaneously!",
                     className="card-text",
                 ),
-                dbc.Button("Compare!", href="/page2", color="primary"),
+                dbc.Button("Compare!", href="/compare", color="primary"),
             ]
         ),
     ],
@@ -71,7 +72,7 @@ index_layout = dbc.Container([
     ]),
     dbc.Row([dbc.Col(map_card, width={'size': 4, 'offset': 1}),
              dbc.Col(comparison_card, width=4)])
-    ], className="mx-auto rounded", style={"position": "absolute"})
+], className="mx-auto rounded", style={"position": "absolute"})
 
 app.layout = dbc.Container(fluid=True, children=[
     dcc.Location(id='url', refresh=False),
@@ -86,7 +87,7 @@ def display_page(pathname):
     if pathname == '/map':
         return map_app.layout
     elif pathname == '/compare':
-        return comparison.layout
+        return comparison_ver2.layout
     elif pathname == '/':
         return index_layout
     else:

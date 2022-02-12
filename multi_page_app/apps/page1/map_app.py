@@ -11,6 +11,9 @@ df1 = pd.read_csv(
     'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/business-demographics-updated.csv')
 df2 = pd.read_csv(
     'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/business-survival-rates-updated.csv')
+
+#This json file is sourceed from the London Data Store
+# https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london?resource=9ba8c833-6370-4b11-abdc-314aa020d5e0
 f = open(
     'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/london_boroughs.json')
 geoj = json.load(f)
@@ -55,16 +58,16 @@ layout = dbc.Container([
                      )
     ),
     html.Em(children=[
-        '*Please note that any data after 2019 is not available.'
+        '*Data after 2019 is not available.*'
     ]
     ),
     dbc.Row(children=[
-        dbc.Col(width=5, children=[
+        dbc.Col(children=[
             dcc.Graph(id='surv-graph')
-        ], style={'margin': '0'}),
-        dbc.Col(width=7, children=[
+        ], style={'margin': '0'}, xs=12, sm=12, md=10, lg=10, xl=5),
+        dbc.Col(children=[
             dcc.Graph(id='map')
-        ], style={'margin': '0'})
+        ], style={'margin': '0'}, xs=12, sm=12, md=10, lg=10, xl=7)
     ]),
 ])
 
@@ -90,7 +93,9 @@ def update_map(option_slctd):
         color_continuous_scale='Viridis',
         custom_data=['area'],
         opacity=0.5,
-        center={'lat': 51.509865, 'lon': -0.118092}
+        center={'lat': 51.509865, 'lon': -0.118092},
+        title=('Birth Rate-Death Rate (%) of businesses in {}'.format(option_slctd)),
+        labels={'birth-death_rate': '%'}
     )
     return [fig]
 
@@ -127,3 +132,4 @@ def update_bar(clk_data, year):
                                                                                                 '{}'.format(year),
                       labels={'area': '', 'variable': 'Years after {}'.format(year)})
         return [fig1]
+
