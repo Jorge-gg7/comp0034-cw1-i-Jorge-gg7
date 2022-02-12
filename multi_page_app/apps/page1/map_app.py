@@ -94,7 +94,6 @@ def update_map(option_slctd):
     )
     return [fig]
 
-
 @app.callback(
     [Output('surv-graph', 'figure'),
      Input('map', 'clickData'),
