@@ -6,9 +6,9 @@ from dash import html, dcc, Input, Output
 from multi_page_app.app import app
 
 df = pd.read_csv(
-     'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page2/datasets/business-demographics-updated.csv')
+     '/Users/limchernyao/PycharmProjects/comp0034-cw1-i-team10/multi_page_app/apps/page2/datasets/business-demographics-updated.csv')
 
-layout = html.Div([
+app.layout = html.Div([
 
     html.Div([
         dcc.Dropdown(id='select_borough',
@@ -48,36 +48,36 @@ layout = html.Div([
                      {'label': 'Westminster', 'value': 'Westminster'},
             ],
             optionHeight=20,
-            value='Westminster',
+            value='',
             disabled=False,
             multi=True,
             searchable=True,
             search_value='',
-            placeholder='Select boroughs...',
+            placeholder='Select boroughs to compare...',
             clearable=True,
             )
     ]),
 
     html.Div([
-        dcc.Graph(id='comparison_graph', figure={})
+        dcc.Graph(id='comparison_graph')
     ]),
 
 ])
 
 @app.callback(
-    Output(component_id='comparison_graph', component_property='figure'),
-    Input(component_id='select_borough', component_property='value'),
+    [Output(component_id='comparison_graph', component_property='figure')],
+    [Input(component_id='select_borough', component_property='value')]
 )
 
 def build_graph(boroughs_chosen):
     df1 = df.copy()
-    df1 = df[df["area"==boroughs_chosen]]
+    df1 = df1[df1["area"] == boroughs_chosen]
 
     fig = px.bar(
         data_frame=df1,
-        x="year",
+        x="area",
         y="birth-death_rate",
-        color="area",
+        #color="area",
         orientation="v",
         barmode='group',
     )
