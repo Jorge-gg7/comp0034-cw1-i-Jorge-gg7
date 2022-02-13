@@ -182,7 +182,7 @@ def survival_rate_bar(type, borough1, borough2, year_chosen):
             orientation='h',
             barmode='group',
             labels={'area': ''},
-            title='{} of {} after {}'.format(type, borough1, year_chosen)
+            title='{} in {} after {}'.format(type, borough1, year_chosen)
         )
 
         fig1.update_layout(showlegend=False)
@@ -195,7 +195,7 @@ def survival_rate_bar(type, borough1, borough2, year_chosen):
             orientation='h',
             barmode='group',
             labels={'area': '', 'variable': ''},
-            title='{} of {} after {}'.format(type, borough1, year_chosen)
+            title='{} in {} after {}'.format(type, borough1, year_chosen)
         )
 
         fig2.update_layout(legend=dict(

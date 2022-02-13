@@ -12,7 +12,7 @@ df1 = pd.read_csv(
 df2 = pd.read_csv(
     'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/business-survival-rates-updated.csv')
 
-#This json file is sourceed from the London Data Store
+# This json file is sourceed from the London Data Store
 # https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london?resource=9ba8c833-6370-4b11-abdc-314aa020d5e0
 f = open(
     'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/london_boroughs.json')
@@ -99,6 +99,7 @@ def update_map(option_slctd):
     )
     return [fig]
 
+
 @app.callback(
     [Output('surv-graph', 'figure'),
      Input('map', 'clickData'),
@@ -113,11 +114,20 @@ def update_bar(clk_data, year):
 
         survival_rates = ['1_year_survival_rate', '2_year_survival_rate', '3_year_survival_rate',
                           '4_year_survival_rate', '5_year_survival_rate']
+        new_names = {'5_year_survival_rate': '5 Years', '4_year_survival_rate': '4 Years',
+                     '3_year_survival_rate': '3 Years',
+                     '2_year_survival_rate': '2 Years', '1_year_survival_rate': '1 Year'}
 
-        fig1 = px.bar(dff2, x='area', y=survival_rates, barmode='group', orientation='v', title='Survival Rates of new '
-                                                                                                'businesses formed in '
-                                                                                                '2004',
+        fig1 = px.bar(dff2, x='area', y=survival_rates, barmode='group', orientation='v',
+                      title='Business Survival Rates in City '
+                            'of London after '
+                            '2004',
                       labels={'area': '', 'variable': 'Years after 2004'})
+
+        fig1.for_each_trace(lambda t: t.update(name=new_names[t.name],
+                                               legendgroup=new_names[t.name],
+                                               hovertemplate=t.hovertemplate.replace(t.name, new_names[t.name])
+                                               ))
         return [fig1]
     else:
         dff2 = dff2[dff2["year"] == year]
@@ -126,10 +136,17 @@ def update_bar(clk_data, year):
 
         survival_rates = ['1_year_survival_rate', '2_year_survival_rate', '3_year_survival_rate',
                           '4_year_survival_rate', '5_year_survival_rate']
+        new_names = {'5_year_survival_rate': '5 Years', '4_year_survival_rate': '4 Years',
+                     '3_year_survival_rate': '3 Years',
+                     '2_year_survival_rate': '2 Years', '1_year_survival_rate': '1 Year'}
 
-        fig1 = px.bar(dff2, x='area', y=survival_rates, barmode='group', orientation='v', title='Survival Rates of new '
-                                                                                                'businesses formed in '
-                                                                                                '{}'.format(year),
+        fig1 = px.bar(dff2, x='area', y=survival_rates, barmode='group', orientation='v',
+                      title='Business Survival Rates in {} '
+                            'after {}'.format(click_area, year),
                       labels={'area': '', 'variable': 'Years after {}'.format(year)})
-        return [fig1]
 
+        fig1.for_each_trace(lambda t: t.update(name=new_names[t.name],
+                                               legendgroup=new_names[t.name],
+                                               hovertemplate=t.hovertemplate.replace(t.name, new_names[t.name])
+                                               ))
+        return [fig1]

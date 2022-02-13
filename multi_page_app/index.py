@@ -70,8 +70,8 @@ index_layout = dbc.Container([
     dbc.Row([
         dbc.Col(html.H1('Main Menu', id='main-menu-title'), width={'offset': 1})
     ]),
-    dbc.Row([dbc.Col(map_card, width={'size': 4, 'offset': 1}),
-             dbc.Col(comparison_card, width=4)])
+    dbc.Row([dbc.Col(map_card, width={'offset': 1}, sm=12, md=10, lg=4, xl=4),
+             dbc.Col(comparison_card, sm=12, md=10, lg=4, xl=4)])
 ], className="mx-auto rounded", style={"position": "absolute"})
 
 app.layout = dbc.Container(fluid=True, children=[
