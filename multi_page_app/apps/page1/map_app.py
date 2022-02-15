@@ -1,10 +1,11 @@
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
+
 import json
 
-from dash import html, dcc, Input, Output, State
+from dash import html, dcc, Input, Output
 import dash_bootstrap_components as dbc
+
 from multi_page_app.app import app
 
 df1 = pd.read_csv(
@@ -12,7 +13,7 @@ df1 = pd.read_csv(
 df2 = pd.read_csv(
     'apps/page1/datasets/business-survival-rates-updated.csv')
 
-# This json file is sourceed from the London Data Store
+# This json file is sourced from the London Data Store
 # https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london?resource=9ba8c833-6370-4b11-abdc-314aa020d5e0
 
 f = open(
@@ -91,7 +92,7 @@ def update_map(option_slctd):
         mapbox_style="carto-positron",
         color='birth-death_rate',
         hover_name='area',
-        hover_data=['active_enterprises', 'births', 'birth_rate', 'death_rate', 'birth-death_rate'],
+        hover_data=['active_enterprises', 'birth_rate', 'death_rate', 'birth-death_rate'],
         color_continuous_scale='Viridis',
         custom_data=['area'],
         opacity=0.5,
