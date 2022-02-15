@@ -1,7 +1,9 @@
 import pandas as pd
 import plotly.express as px
+
 import dash_bootstrap_components as dbc
 from dash import html, dcc, Input, Output
+
 from multi_page_app.app import app
 
 df1 = pd.read_csv(
