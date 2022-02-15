@@ -5,9 +5,9 @@ from dash import html, dcc, Input, Output
 from multi_page_app.app import app
 
 df1 = pd.read_csv(
-    'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page2/datasets/business-demographics-updated.csv')
+    'apps/page2/datasets/business-demographics-updated.csv')
 df2 = pd.read_csv(
-    'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page2/datasets/business-survival-rates-updated.csv')
+    'apps/page2/datasets/business-survival-rates-updated.csv')
 
 layout = dbc.Container([
     html.Br(),
@@ -18,7 +18,7 @@ layout = dbc.Container([
     ),
 
     dbc.Row(
-        dbc.Col(html.H5("Compare the statistics of 2 boroughs between 2004-2019 to compare statistics"),
+        dbc.Col(html.H5("Select 2 boroughs, a year and the desired statistic to compare them side-by-side!"),
                 className='text-muted')
     ),
 

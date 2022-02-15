@@ -8,14 +8,16 @@ import dash_bootstrap_components as dbc
 from multi_page_app.app import app
 
 df1 = pd.read_csv(
-    'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/business-demographics-updated.csv')
+    'apps/page1/datasets/business-demographics-updated.csv')
 df2 = pd.read_csv(
-    'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/business-survival-rates-updated.csv')
+    'apps/page1/datasets/business-survival-rates-updated.csv')
 
 # This json file is sourceed from the London Data Store
 # https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london?resource=9ba8c833-6370-4b11-abdc-314aa020d5e0
+
 f = open(
-    'C:/Users/Brandon/PycharmProjects/comp0034-cw1-i-Jorge-gg7/multi_page_app/apps/page1/datasets/london_boroughs.json')
+    'apps/page1/datasets/london_boroughs.json')
+
 geoj = json.load(f)
 
 layout = dbc.Container([
